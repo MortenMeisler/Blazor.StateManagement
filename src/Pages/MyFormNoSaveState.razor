@@ -1,0 +1,31 @@
+﻿@page "/myformnosavestate"
+    <EditForm Model="@_myCrazyViewModel" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="FirstName" class="control-label">First Name</label>
+                    <InputText id="name" class="form-control" @bind-Value="_myCrazyViewModel.FirstName"></InputText>
+                </div>
+                <div class="form-group">
+                    <label for="FirstName" class="control-label">Last Name</label>
+                    <InputText id="name" class="form-control" @bind-Value="_myCrazyViewModel.LastName"></InputText>
+                </div>
+              
+            </div>
+        </div>
+        <input type="submit" class="btn btn-default" value="Submit" />
+    </EditForm>
+
+@code {
+    private MyCrazyViewModel _myCrazyViewModel = new MyCrazyViewModel();
+
+    private void HandleValidSubmit()
+    {
+        Console.WriteLine("OnValidSubmit");
+        Console.WriteLine(_myCrazyViewModel.FirstName);
+        Console.WriteLine(_myCrazyViewModel.LastName);
+    }
+}

@@ -1,0 +1,71 @@
+﻿@page "/myformsavestate"
+@inject IStateManager<MyCrazyViewModel> stateManager
+
+<EditForm EditContext="@_editContext" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="FirstName" class="control-label">First Name</label>
+                <InputText id="name" class="form-control" @bind-Value="stateManager.Model.FirstName"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="FirstName" class="control-label">Last Name</label>
+                <InputText id="name" class="form-control" @bind-Value="stateManager.Model.LastName"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="FirstName" class="control-label">Description</label>
+                <InputText id="name" class="form-control" @bind-Value="stateManager.Model.Description"></InputText>
+            </div>
+            <div class="form-group">
+                <label for="DateOfBirth" class="control-label">Date of Birth</label>
+                <InputDate id="name" class="form-control" @bind-Value="stateManager.Model.DateOfBirth"></InputDate>
+            </div>
+            <div class="form-group">
+                <label for="PetNames" class="control-label">Select Pet Name</label>
+                <select id="Location" @bind="@stateManager.Model.PetName" class="form-control">
+                    <option></option>
+                    @foreach (string petName in @petNames)
+                    {
+                        <option value="@petName">@petName</option>
+                    }
+                  
+                </select>
+            </div>
+
+        </div>
+    </div>
+    <input type="submit" class="btn btn-default" value="Submit" />
+</EditForm>
+
+@if (_isValid)
+{
+    <p><em>First Name: @stateManager.Model.FirstName</em></p>
+    <p><em>Last Name: @stateManager.Model.FirstName</em></p>
+    <p><em>Description: @stateManager.Model.Description</em></p>
+    <p><em>Date of Birth: @stateManager.Model.DateOfBirth</em></p>
+    <p><em>PetName selected: @stateManager.Model.PetName</em></p>
+
+}
+
+@code {
+
+    private EditContext _editContext;
+    private bool _isValid;
+    private IList<string> petNames = new List<string>() { "Molly", "Max", "Mr. Something", "Tiger king" };
+
+
+    protected override void OnInitialized()
+    {
+        _editContext = new EditContext(stateManager.Model);
+    }
+
+    private void HandleValidSubmit()
+    {
+        _isValid = _editContext.Validate();
+
+        //Do stuff - create instance with API or something
+    }
+}
