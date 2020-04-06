@@ -1,2 +1,2 @@
 # Blazor State Management
-Sample project of how to do persist state in Blazor components
+Sample project of how to persist state in Blazor components
